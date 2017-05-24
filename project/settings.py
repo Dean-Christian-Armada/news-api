@@ -22,10 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+(%ds)4-va-itzrq^+ny_wcrz%w--fp4ed#&!sq#tv41$!nzql'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('ENV') == 'cloud':
+    DEBUG = False
+    MONGODB_URL = os.environ.get('MONGODB_URL')
+else:
+    DEBUG = True
+    MONGODB_URL = ''  # to be inserted here locally
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,8 +139,3 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
-
-if os.environ.get('ENV') == 'staging':
-    MONGODB_URL = os.environ.get('MONGODB_URL')
-else:
-    MONGODB_URL = ''  # to be inserted here locally

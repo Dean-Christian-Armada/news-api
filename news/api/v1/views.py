@@ -39,9 +39,12 @@ def search(request):
     db = client.get_default_database()
     collection = db.exam
     _find = keyword_search_mongodb(request.GET)
-    res = collection.find_one(_find)
+    res = collection.count(_find)
     if not res:
         return Response({'err_msg': 'search did not match anything'},
                         status.HTTP_404_NOT_FOUND)
-    res.pop('_id', None)
-    return Response(res)
+    ret = []
+    for x in collection.find(_find):
+        x.pop('_id', None)
+        ret.append(x)
+    return Response(ret)

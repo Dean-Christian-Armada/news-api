@@ -31,7 +31,7 @@ def search(request):
     if valid_search:
         return Response({'err_msg': ('You have entered an invalid key search. '
                                      'Available keys are \'title\', \'tags\', '
-                                     '\'summary\', \'text\''),
+                                     'and \'summary\''),
                          'err_keys': valid_search},
                         status.HTTP_400_BAD_REQUEST)
     ssl = os.path.join(settings.BASE_DIR, 'project', 'ssl.crt')

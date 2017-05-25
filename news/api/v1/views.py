@@ -20,18 +20,18 @@ def keyword_search_mongodb(data):
 @api_view(['GET'])
 def search(request):
     if not request.GET.keys():
-        return Response({'err_msg': 'Our deepest apology but this is \
-									 search only and not for listing all \
-									 data, please include GET parameters \
-									 on the API request'},
+        return Response({'err_msg': ('Our deepest apology but this is'
+                                     'search only and not for listing all'
+                                     'data, please include GET parameters'
+                                     'on the API request')},
                         status.HTTP_400_BAD_REQUEST)
     # the only available GET Parameters keys for search
     available_search = ['title', 'tags', 'summary', 'text']
     valid_search = list(set(request.GET.keys()) - set(available_search))
     if valid_search:
-        return Response({'err_msg': 'You have entered an invalid key search. \
-        							Available keys are "title", \'tags\', \
-        							\'summary\', \'text\'',
+        return Response({'err_msg': ('You have entered an invalid key search.'
+                                     'Available keys are \'title\', \'tags\','
+                                     '\'summary\', \'text\''),
                          'err_keys': valid_search},
                         status.HTTP_400_BAD_REQUEST)
     ssl = os.path.join(settings.BASE_DIR, 'project', 'ssl.crt')
